@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+{%block content%}
+<div class='container-fluid'>
+
+    <center>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<div class="row">
+    <div class="col">
+        <h5><img src="{% static "jap.jpg" %}" width=50 >日本累積確診人數</h5>
+<canvas id="myChart8" width="60" height="50"></canvas>
+</div>
+<div class="col">
+<script>
+
+
+var ctx = document.getElementById('myChart8').getContext('2d');
+
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'bar',
+    data: {
+        labels: [{% for d5 in dict_list5 %}'{{d5.date}}',{% endfor %}],
+        datasets: [{
+            label: '累積確診人數',
+            backgroundColor: 'rgb(	255, 0, 0)',
+            borderColor: 'rgb(	255, 0, 0)',
+            data: [{% for d5 in dict_list5 %}'{{d5.cases}}',{% endfor %}],
+        }]
+    },
+
+    // Configuration options go here
+    options: {}
+});
+</script>
+<h5>日本疫情趨勢</h5>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<canvas id="myChart9" width="60" height="50"></canvas></div></div>
+<script>
+
+    
+var ctx = document.getElementById('myChart9').getContext('2d');
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'bar',
+
+    // The data for our dataset
+    data: {
+        labels: [{% for d5 in dict_list5 %}'{{d5.date}}',{% endfor %}],
+        datasets: [{
+            label: '單日確診人數',
+            backgroundColor: 'rgb(	255, 0, 0)',
+            borderColor: 'rgb(	255, 0, 0)',
+            data: [{% for d5 in dict_list5 %}'{{d5.new_cases}}',{% endfor %}]
+        }]
+    },
+
+    // Configuration options go here
+    options: {}
+});
+</script>
+
+</center>
+
+{% endblock %}

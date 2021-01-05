@@ -1,0 +1,38 @@
+<html>
+    <head>
+      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+      <script type="text/javascript">
+        google.charts.load('current', {
+          'packages':['geochart'],
+          // Note: you will need to get a mapsApiKey for your project.
+          // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+          'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
+        });
+  
+        google.charts.setOnLoadCallback(drawRegionsMap);
+  
+        function drawRegionsMap() {
+          var data = google.visualization.arrayToDataTable([
+            ['國家', '確診人數'],
+  
+            {% for d in dict_list %}
+            ['{{d.Country}}', Number('{{d.TotalCases}}'.replace(/,/g, ""))],
+            {% endfor %}
+  
+          ]);
+  
+          var options = {colorAxis: {minValue:0,maxValue:2000000,colors: ['#ffa07a', '#dc143c','#a52a2a','#a52a2a','#800000']},defaultColor: '#81d4fa'}
+  
+          var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+  
+          chart.draw(data, options);
+  
+            }
+  
+      </script>
+    </head>
+    <body>
+      
+      <div id="regions_div" style="width: 900px; height: 400px;"></div>
+    </body>
+</html>  
